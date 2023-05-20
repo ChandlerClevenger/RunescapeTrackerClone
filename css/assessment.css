@@ -35,10 +35,5 @@ body {
     line-height: 1.5;
     font-size: larger;
     color: white;
-}
-#board {
-    width: 100%;
-    height: 100vh;
-    height: 100dvh;
     background-color: #333;
 }
