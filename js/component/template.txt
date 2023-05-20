@@ -1,0 +1,23 @@
+/**
+ * Template.
+ */
+component.template = function () {
+    component.apply(this, arguments);
+};
+assessment.extend(component.template, component);
+
+/**
+ * Decorate.
+ *
+ * @param {HTMLDivElement} parent
+ */
+component.template.prototype.decorate = function (parent) {
+    const self = this;
+    const container = document.createElement("div");
+    parent.appendChild(container);
+
+    // Show basic loading text until the API call to the FDA completes.
+    const loading = document.createElement("div");
+    loading.innerText = "Loading...";
+    container.appendChild(loading);
+};

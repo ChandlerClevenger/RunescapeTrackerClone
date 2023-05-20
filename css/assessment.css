@@ -1,0 +1,44 @@
+/*
+          ____
+        o8%8888,
+      o88%8888888.
+     8'-    -:8888b
+    8'         8888
+   d8.-=. ,==-.:888b
+   >8 `~` :`~' d8888
+   88         ,88888
+   88b. `-~  ':88888
+   888b ~==~ .:88888
+   88888o--:':::8888
+   `88888| :::' 8888b
+   8888^^'       8888b
+  d888           ,%888b.
+ d88%            %%%8--'-.
+/88:.__ ,       _%-' ---  -
+    '''::===..-'   =  --.
+
+*/
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap");
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "Playfair Display", "Roboto", sans-serif;
+    font-weight: 500;
+    line-height: 1.5;
+    font-size: larger;
+    color: white;
+}
+#board {
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    background-color: #333;
+}
