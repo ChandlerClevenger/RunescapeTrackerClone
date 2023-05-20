@@ -9,8 +9,8 @@ var assessment = {};
  * Runs when the document is fully loaded and ready to go.
  */
 assessment.ready = function () {
-    const board = new component.board();
-    board.render(document.body);
+    const stats = new component.stats();
+    stats.render(document.body);
 };
 
 /**
