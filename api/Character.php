@@ -1,91 +1,56 @@
-<!DOCTYPE html>
-<html>
-	<body>
-		<h1>
-			<pre>
-			<?php
-				$username = "impignorate";
+<?php
+    $username = "impignorate";
 
-				$url = "https://secure.runescape.com/m=hiscore/index_lite.ws?player=";
+    $url = "https://secure.runescape.com/m=hiscore/index_lite.ws?player=";
 
-				$url .= $username;
+    $url .= $username;
 
-				// Initialize a CURL session.
-				$ch = curl_init();
- 
-				// Return Page contents.
-				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-                curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-				//grab URL and pass it to the variable.
-				curl_setopt($ch, CURLOPT_URL, $url);
-                
-				$result  = curl_exec($ch);
+    // Initialize a CURL session.
+    $ch = curl_init();
 
-                $err     = curl_error($ch);
-                if ($err) {
-                    echo "cURL Error #:" . $err;
-                    die();
-                }
-                curl_close($ch);
+    // Set CURL options.
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+    curl_setopt($ch, CURLOPT_URL, $url);
+    
+    $result  = curl_exec($ch);
+    $err     = curl_error($ch);
+    if ($err) {
+        echo "cURL Error #:" . $err;
+        header("HTTP/1.1 500 Internal Server Error");
+        die();
+    }
+    curl_close($ch);
 
-				$stat_array = explode("\n", $result);
-				array_splice($stat_array, 29);
+    $stat_array = explode("\n", $result);
 
-				$stats = array(
-                    "Username" => $username,
-                    "Overall" => "not assigned", 
-                    "Attack" => "not assigned", 
-                    "Defence" => "not assigned", 
-                    "Strength" => "not assigned", 
-                    "Constitution" => "not assigned", 
-                    "Ranged" => "not assigned", 
-                    "Prayer" => "not assigned", 
-                    "Magic" => "not assigned", 
-                    "Cooking" => "not assigned", 
-                    "Woodcutting" => "not assigned", 
-                    "Fletching" => "not assigned", 
-                    "Fishing" => "not assigned", 
-                    "Firemaking" => "not assigned", 
-                    "Crafting" => "not assigned", 
-                    "Smithing" => "not assigned", 
-                    "Mining" => "not assigned", 
-                    "Herblore" => "not assigned", 
-                    "Agility" => "not assigned", 
-                    "Thieving" => "not assigned", 
-                    "Slayer" => "not assigned", 
-                    "Farming" => "not assigned", 
-                    "Runecrafting" => "not assigned", 
-                    "Hunter" => "not assigned", 
-                    "Construction" => "not assigned", 
-                    "Summoning" => "not assigned", 
-                    "Dungeoneering" => "not assigned", 
-                    "Divination" => "not assigned", 
-                    "Invention" => "not assigned", 
-                    "Archaeology" => "not assigned");
+    for($i = 0; $i < count($stat_array) - 1; $i++){
+        $stats[stat_translation($i)] = $stat_array[$i];
+    }
 
-				for($i = 0; $i < count($stat_array); $i++){
-					$stats[stat_translation($i)] = $stat_array[$i];
-				}
+    function stat_translation(int $id){
+        $fields_list = array(
+            "Overall", "Attack", 
+            "Defence", "Strength", "Constitution", "Ranged", "Prayer", "Magic", 
+            "Cooking", "Woodcutting", "Fletching", "Fishing", "Firemaking", "Crafting", 
+            "Smithing", "Mining", "Herblore", "Agility", "Thieving", 
+            "Slayer", "Farming", "Runecrafting", "Hunter", "Construction", 
+            "Summoning", "Dungeoneering", "Divination", "Invention", "Archaeology",
 
-				/*
-				for($i = 0; $i < count($stat_array); $i++){
-					echo stat_translation($i) . ":\n";
-					$split = explode(",", $stat_array[$i]);
-					echo "Level: ". $split[1] . ", XP: " . $split[2] . ", Rank: " . $split[0] . "\n";
-				}
-				*/
+            "Bounty Hunter", "B.H. Rogues", "Dominion Tower", "The Crucible", 
+            "Castle Wars games", "B.A. Attackers", "B.A. Defenders", "B.A. Collectors", 
+            "B.A. Healers", "Duel Tournament", "Mobilising Armies", 
+            "Conquest", "Fist of Guthix", "GG: Athletics", "GG: Resource Race", 
+            "WE2: Armadyl Lifetime Contribution", "WE2: Bandos Lifetime Contribution", 
+            "WE2: Armadyl PvP kills", "WE2: Bandos PvP kills", "Heist Guard Level", 
+            "Heist Robber Level", "CFP: 5 game average", "AF15: Cow Tipping", 
+            "AF15: Rats killed after the miniquest", "RuneScore", 
+            "Clue Scrolls Easy", "Clue Scrolls Medium", "Clue Scrolls Hard", 
+            "Clue Scrolls Elite", "Clue Scrolls Master"
+        );
+        return $fields_list[$id];
+    }
 
-				function stat_translation(int $id){
-					$stat_list = array("Overall", "Attack", "Defence", "Strength", "Constitution", "Ranged", "Prayer", "Magic", "Cooking", "Woodcutting", "Fletching", "Fishing", "Firemaking", "Crafting", "Smithing", "Mining", 
-					"Herblore", "Agility", "Thieving", "Slayer", "Farming", "Runecrafting", "Hunter", "Construction", "Summoning", "Dungeoneering", "Divination", "Invention", "Archaeology");
-					return $stat_list[$id];
-				}
-				
-
-				var_dump($stats); 
-			?>	
-			</pre>
-		</h1>
-	</body>
-</html>
+    var_dump($stats); 
+?>
