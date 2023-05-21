@@ -14,12 +14,26 @@ const log = console.log;
  */
 component.board.prototype.decorate = function (parent) {
     const self = this;
-    const container = document.createElement("div");
-    container.addEventListener("keydownmove", function (event) {});
-
-    container.id = "board";
+    parent.id = "board";
     const character = new component.character();
-    character.render(container);
-    log(character);
-    parent.appendChild(container);
+
+    document.addEventListener("keydown", function (event) {
+        switch (event.key) {
+            case "w":
+                character.move(0, -10);
+                break;
+            case "a":
+                character.move(-10, 0);
+                break;
+            case "s":
+                character.move(0, 10);
+                break;
+            case "d":
+                character.move(10, 0);
+                break;
+            default:
+        }
+    });
+
+    character.render(parent);
 };
